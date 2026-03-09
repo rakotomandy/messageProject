@@ -1,0 +1,30 @@
+@props(['email', 'token'])
+ 
+ <div class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Reset Your Password</h2>
+
+            <form id="resetPasswordForm" method="POST" class="space-y-5">
+                @csrf
+                <input type="hidden" name="email" value="{{ $email }}">
+                <input type="hidden" name="token" value="{{ $token }}">
+
+                <!-- New Password -->
+                <div>
+                    <label for="password" class="block text-gray-700 font-medium mb-1">New Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter new password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+
+                <!-- Password confirmation-->
+                <div>
+                    <label for="password_confirmation" class="block text-gray-700 font-medium mb-1">Confirm Password</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm new password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">
+                    Reset Password
+                </button>
+            </form>
+        </div>
+    </div>
