@@ -2,51 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Login;
+use App\Actions\Auth\LoginUser;
+use App\Actions\Auth\LogoutUser;
+use App\Actions\Auth\RegisterUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request, LoginUser $loginUser)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
-
-        if(Auth::guard('login')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return response()->json(['success' => true, 'message' => 'Login successful']);
-        }
-
-        return response()->json(['success' => false, 'message' => 'Invalid email or password']);
+        $result = $loginUser->execute($request);
+        return response()->json($result);
     }
 
-    public function signup(Request $request)
+    public function signup(Request $request, RegisterUser $registerUser)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:logins,email',
-            'password' => 'required|string|min:4|confirmed',
-        ]);
-
-        $user = Login::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return response()->json(['success' => true, 'message' => 'Signup successful']);
+        $result = $registerUser->execute($request);
+        return response()->json($result);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request, LogoutUser $logoutUser)
     {
-        Auth::guard('login')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return response()->json(['success' => true, 'message' => 'Logout successful']);
+        $result = $logoutUser->execute($request);
+        return response()->json($result);
     }
 }
