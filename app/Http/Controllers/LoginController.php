@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Auth\LoginUser;
 use App\Actions\Auth\LogoutUser;
 use App\Actions\Auth\RegisterUser;
+use App\Actions\Auth\UpdateProfile;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -19,6 +20,12 @@ class LoginController extends Controller
     {
         $result = $registerUser->execute($request);
         return response()->json($result);
+    }
+
+    public function updateProfile(Request $request, UpdateProfile $updateProfile)
+    {
+        $result = $updateProfile->execute($request);
+        return redirect()->route('profile')->with('success', 'Profile updated successfully');
     }
 
     public function logout(Request $request, LogoutUser $logoutUser)

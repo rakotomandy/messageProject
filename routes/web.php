@@ -28,6 +28,13 @@ Route::middleware(['auth:login','prevent-back-history'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard.dashboard');
     })->name('dashboard');
+    Route::get('/profile', function () {
+        return view('dashboard.profile');
+    })->name('profile');
+    Route::get('/profile/edit', function () {
+        return view('dashboard.profileEdit');
+    })->name('profile.edit');
+    Route::put('/profile/update', [LoginController::class, 'updateProfile'])->name('profile.update');
     Route::post('logout',[LoginController::class, 'logout'])->name('logout');
 });
 

@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 
-@section('title','dashboard')
+@section('title','profile')
 
 @section('content')
-<x-dashboard />
+<x-profile />
 @endsection
 
 @push('scripts')
